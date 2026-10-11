@@ -1,0 +1,70 @@
+<div class="orders-container">
+  <div class="success-message" *ngIf="successMessage">{{ successMessage }}</div>
+  <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+  <div class="header">
+    <h2>Orders</h2>
+  </div>
+
+  <div class="stats">
+    <div class="card">
+      <h4>Total Orders</h4>
+      <p>{{ totalOrders }}</p>
+    </div>
+    <div class="card">
+      <h4>Pending</h4>
+      <p>{{ pendingOrders }}</p>
+    </div>
+    <div class="card">
+      <h4>Completed</h4>
+      <p>{{ completedOrders }}</p>
+    </div>
+  </div>
+
+  <div class="table-card">
+    <div *ngIf="loading" style="text-align: center; padding: 40px;">
+      <p>Loading orders...</p>
+    </div>
+
+    <div *ngIf="!loading && orders.length === 0" style="text-align: center; padding: 40px;">
+      <p>No orders found.</p>
+    </div>
+
+    <table *ngIf="!loading && orders.length > 0">
+      <thead>
+        <tr>
+          <th>{{ getUserType() === '1' ? 'Dealer' : 'Farmer' }}</th>
+          <th>Crop</th>
+          <th>Quantity</th>
+          <th>Amount (₹)</th>
+          <th>Date</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of orders">
+          <td>{{ order.counterpartName || 'N/A' }}</td>
+          <td>{{ order.cropName }}</td>
+          <td>{{ order.quantity }}</td>
+          <td>₹{{ order.totalAmount }}</td>
+          <td>{{ order.orderDate | date:'dd MMM yyyy' }}</td>
+          <td>
+            <span class="status" [ngClass]="getStatusClass(order.status)">{{ order.status }}</span>
+          </td>
+          <td>
+            <!-- Farmer actions -->
+            <button class="btn-confirm" *ngIf="getUserType() === '1' && order.status === 'Pending'" (click)="confirmOrder(order.id)">Confirm</button>
+            <span *ngIf="getUserType() === '1' && order.status === 'Confirmed'">Awaiting Payment</span>
+            <span *ngIf="getUserType() === '1' && order.status === 'Completed'">Completed</span>
+            <!-- Dealer actions -->
+            <span *ngIf="getUserType() === '2' && order.status === 'Pending'">Awaiting Approval</span>
+            <button class="btn-payment" *ngIf="getUserType() === '2' && order.status === 'Confirmed'" (click)="payNow(order.id)">Pay Now</button>
+            <button class="btn-rating" *ngIf="getUserType() === '2' && order.status === 'Completed' && !order.hasRating" (click)="giveRating(order)">Give Rating</button>
+            <span *ngIf="getUserType() === '2' && order.status === 'Completed' && order.hasRating">Rated</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,52 @@
+<div class="subscriptions-container">
+  <h2>🔔 Crop Subscriptions</h2>
+  <p class="subtitle">Get notified when farmers post crops you're interested in</p>
+
+  <div class="success-message" *ngIf="successMessage">{{ successMessage }}</div>
+  <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+  <div class="add-subscription-card">
+    <h3>Add New Subscription</h3>
+    <form (ngSubmit)="subscribe()" #subForm="ngForm">
+      <div class="form-row">
+        <select [(ngModel)]="newSubscription.cropType" name="cropType" (change)="onCropTypeChange()" required>
+          <option value="">Select Type</option>
+          <option *ngFor="let type of cropTypes" [value]="type">{{ type }}</option>
+        </select>
+
+        <select [(ngModel)]="newSubscription.cropName" name="cropName" required *ngIf="newSubscription.cropType">
+          <option value="">Select Crop</option>
+          <option *ngFor="let name of cropNames" [value]="name">{{ name }}</option>
+        </select>
+
+        <input type="text" [(ngModel)]="newSubscription.location" name="location" placeholder="Location (Optional)">
+      </div>
+
+      <button type="submit" class="btn-subscribe" [disabled]="!subForm.valid">Subscribe Now</button>
+    </form>
+  </div>
+
+  <div class="loading" *ngIf="loading">Loading subscriptions...</div>
+
+  <div class="subscriptions-grid" *ngIf="!loading && subscriptions.length > 0">
+    <div class="subscription-card" *ngFor="let sub of subscriptions">
+      <div class="card-header">
+        <span class="crop-badge">{{ sub.cropType }}</span>
+      </div>
+      <h3>{{ sub.cropName }}</h3>
+      <p class="location" *ngIf="sub.location">📍 {{ sub.location }}</p>
+      <p class="location" *ngIf="!sub.location">📍 All Locations</p>
+      <ul class="features">
+        <li>✔ Instant notifications</li>
+        <li>✔ Price alerts</li>
+        <li>✔ Stock updates</li>
+      </ul>
+      <button class="btn-unsubscribe" (click)="unsubscribe(sub.id)">Unsubscribe</button>
+    </div>
+  </div>
+
+  <div class="no-subscriptions" *ngIf="!loading && subscriptions.length === 0">
+    <h3>No subscriptions yet</h3>
+    <p>Add a subscription above to get notified when crops are available!</p>
+  </div>
+</div>

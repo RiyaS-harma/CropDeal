@@ -1,0 +1,60 @@
+<div class="admin-portal">
+  <!-- Mobile Header -->
+  <div class="mobile-header">
+    <button class="hamburger" (click)="toggleSidebar()">☰</button>
+    <h1 class="mobile-logo">🌾 CropDeal</h1>
+  </div>
+
+  <!-- Overlay -->
+  <div class="overlay" [class.show]="sidebarOpen" (click)="toggleSidebar()"></div>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" [class.open]="sidebarOpen">
+    <div class="logo-section">
+      <h1 class="logo">🌾 CropDeal</h1>
+      <p class="portal-label">Admin Portal</p>
+    </div>
+
+    <nav class="nav-menu">
+      <a routerLink="/admin/dashboard" routerLinkActive="active" class="nav-item" (click)="sidebarOpen = false">
+        <span class="icon">📊</span>
+        <span>Dashboard</span>
+      </a>
+      <a routerLink="/admin/farmers" routerLinkActive="active" class="nav-item" (click)="sidebarOpen = false">
+        <span class="icon">👨‍🌾</span>
+        <span>Manage Farmers</span>
+      </a>
+      <a routerLink="/admin/dealers" routerLinkActive="active" class="nav-item" (click)="sidebarOpen = false">
+        <span class="icon">🏢</span>
+        <span>Manage Dealers</span>
+      </a>
+      <a routerLink="/admin/reports" routerLinkActive="active" class="nav-item" (click)="sidebarOpen = false">
+        <span class="icon">📈</span>
+        <span>Reports</span>
+      </a>
+    </nav>
+
+    <div class="profile-section">
+      <div class="profile-info">
+        <div *ngIf="!profileImage" class="profile-avatar">
+          {{ getInitials() }}
+        </div>
+        <img *ngIf="profileImage" [src]="profileImage" alt="profile" class="profile-avatar" />
+        <div class="profile-details">
+          <p class="profile-name">{{ fullName }}</p>
+          <p class="profile-role">Administrator</p>
+        </div>
+      </div>
+      <button class="logout-btn" (click)="logout()">
+        Logout
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>
+
+<app-chatbot></app-chatbot>

@@ -1,0 +1,6 @@
+@CaseStudyCropDeal_HostAddress = http://localhost:5240
+
+GET {{CaseStudyCropDeal_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

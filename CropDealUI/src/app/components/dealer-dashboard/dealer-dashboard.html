@@ -1,0 +1,84 @@
+<div class="dashboard-container">
+
+  <div class="success-message" *ngIf="successMessage">{{ successMessage }}</div>
+  <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+  <!-- Banner -->
+  <div class="dashboard-banner">
+    <div class="banner-overlay"></div>
+    <div class="banner-content">
+      <h1>Welcome Back, {{ userName }} 👋</h1>
+      <p>Browse quality crops and manage your orders</p>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-header">
+        <span class="stat-label">Total Orders</span>
+        <span class="stat-icon">📦</span>
+      </div>
+      <p class="stat-value">{{ dashboardData.totalOrders }}</p>
+      <p class="stat-sub">All time orders</p>
+    </div>
+    <div class="stat-card">
+      <div class="stat-header">
+        <span class="stat-label">Pending Orders</span>
+        <span class="stat-icon">⏳</span>
+      </div>
+      <p class="stat-value">{{ dashboardData.pendingOrders }}</p>
+      <p class="stat-sub pending">Awaiting confirmation</p>
+    </div>
+    <div class="stat-card">
+      <div class="stat-header">
+        <span class="stat-label">Total Spent</span>
+        <span class="stat-icon">💰</span>
+      </div>
+      <p class="stat-value">₹{{ dashboardData.totalSpent }}</p>
+      <p class="stat-sub success">Total purchases</p>
+    </div>
+  </div>
+
+  <!-- Recent Orders -->
+  <div class="table-card" *ngIf="recentOrders.length > 0">
+    <div class="table-header">
+      <h3>Recent Orders</h3>
+      <p>Your latest purchases</p>
+    </div>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Crop</th>
+            <th>Farmer</th>
+            <th>Amount</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of recentOrders">
+            <td>{{ order.cropName }}</td>
+            <td>{{ order.farmerName || 'N/A' }}</td>
+            <td class="amount">₹{{ order.totalAmount }}</td>
+            <td>
+              <span class="status-badge"
+                    [ngClass]="{
+                      'completed': order.status === 'Completed',
+                      'pending':   order.status === 'Pending',
+                      'confirmed': order.status === 'Confirmed'
+                    }">
+                {{ order.status }}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="loading" *ngIf="loading">
+    <p>Loading dashboard...</p>
+  </div>
+
+</div>

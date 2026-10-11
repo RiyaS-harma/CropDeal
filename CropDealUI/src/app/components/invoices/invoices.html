@@ -1,0 +1,61 @@
+<div class="invoices-container">
+  <div class="success-message" *ngIf="successMessage">{{ successMessage }}</div>
+
+  <div class="header">
+    <h2>Invoices & Payments</h2>
+  </div>
+
+  <div class="summary">
+    <div class="card">
+      <h4>Total Spending</h4>
+      <p>₹{{ totalSpending }}</p>
+    </div>
+    <div class="card">
+      <h4>This Month</h4>
+      <p>₹{{ thisMonth }}</p>
+    </div>
+    <div class="card">
+      <h4>Pending Payments</h4>
+      <p>₹{{ pendingPayments }}</p>
+    </div>
+  </div>
+
+  <div class="table-card">
+    <div *ngIf="loading" style="text-align: center; padding: 40px;">
+      <p>Loading invoices...</p>
+    </div>
+    <table *ngIf="!loading">
+      <thead>
+        <tr>
+          <th>Invoice ID</th>
+          <th>Order ID</th>
+          <th>Farmer</th>
+          <th>Amount (₹)</th>
+          <th>Date</th>
+          <th>Status</th>
+          <th>Download</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let invoice of invoices">
+          <td>{{ invoice.id }}</td>
+          <td>{{ invoice.orderId }}</td>
+          <td>{{ invoice.farmerName || 'Farmer' }}</td>
+          <td>₹{{ invoice.totalAmount }}</td>
+          <td>{{ invoice.createdAt | date:'dd MMM yyyy' }}</td>
+          <td>
+            <span class="status" [ngClass]="getStatusClass(invoice.status)">
+              {{ invoice.status }}
+            </span>
+          </td>
+          <td>
+            <button class="btn-download" (click)="downloadInvoice(invoice)">
+              Download
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

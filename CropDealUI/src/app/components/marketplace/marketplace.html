@@ -1,0 +1,74 @@
+<div class="marketplace-wrapper">
+  <!-- Success/Error Messages -->
+  <div class="success-message" *ngIf="successMessage">{{ successMessage }}</div>
+  <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+  <!-- FILTER SIDEBAR -->
+  <div class="filters">
+    <h4>Filters</h4>
+
+    <label>Category</label>
+    <select [(ngModel)]="selectedCategory">
+      <option value="">All Categories</option>
+      <option value="Vegetable">Vegetables</option>
+      <option value="Fruit">Fruits</option>
+      <option value="Grain">Grains</option>
+    </select>
+
+    <label>Sort By</label>
+    <select [(ngModel)]="selectedSort">
+      <option value="">None</option>
+      <option value="low">Price: Low to High</option>
+      <option value="high">Price: High to Low</option>
+    </select>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="products-section">
+    <div class="top-bar">
+      <input
+        type="text"
+        placeholder="Search crops..."
+        [(ngModel)]="searchText"
+      />
+      <div class="top-bar-right">
+        <button *ngIf="hasFilters" class="btn-clear" (click)="clearFilters()">Clear Filters</button>
+        <span *ngIf="hasFilters">{{ filteredCrops.length }} results</span>
+      </div>
+    </div>
+
+    <div class="loading" *ngIf="loading">Loading crops...</div>
+
+    <div class="product-grid" *ngIf="!loading">
+      <div class="product-card" *ngFor="let crop of filteredCrops">
+        <img [src]="crop.imageUrl || 'https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=400'"
+             [alt]="crop.cropName"
+             (error)="$any($event.target).src='https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=400'">
+
+        <div class="info">
+          <h3>{{ crop.cropName }}</h3>
+          <p class="type">{{ crop.cropType }}</p>
+          <p class="location">📍 {{ crop.location }}</p>
+          <p class="price">₹{{ crop.pricePerUnit }}/{{ crop.unit }}</p>
+          <p class="stock">Stock: {{ crop.quantity }} {{ crop.unit }}</p>
+
+          <div class="quantity-selector">
+            <button class="btn-qty" (click)="decrementQuantity(crop.id)">-</button>
+            <input type="number" [(ngModel)]="cropQuantities[crop.id]" min="1" [max]="crop.quantity" readonly>
+            <button class="btn-qty" (click)="incrementQuantity(crop.id, crop.quantity)">+</button>
+            <span class="unit-label">{{ crop.unit }}</span>
+          </div>
+
+          <div class="button-group">
+            <button class="btn-cart" (click)="addToCart(crop)">Add to Cart</button>
+            <button class="btn-buy" (click)="placeOrder(crop)">Buy Now</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="no-crops" *ngIf="!loading && filteredCrops.length === 0">
+      <p>No crops found matching your filters.</p>
+    </div>
+  </div>
+</div>

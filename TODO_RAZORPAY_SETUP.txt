@@ -1,0 +1,112 @@
+╔════════════════════════════════════════════════════════════════════════╗
+║                                                                        ║
+║                    ⚠️  ACTION REQUIRED  ⚠️                             ║
+║                                                                        ║
+║              RAZORPAY INTEGRATION IS 95% COMPLETE                      ║
+║                                                                        ║
+╚════════════════════════════════════════════════════════════════════════╝
+
+
+📋 TO COMPLETE THE INTEGRATION, YOU MUST:
+
+┌────────────────────────────────────────────────────────────────────────┐
+│ STEP 1: Get Razorpay Credentials                                      │
+└────────────────────────────────────────────────────────────────────────┘
+
+   1. Visit: https://razorpay.com/
+   2. Click "Sign Up" (it's FREE for testing)
+   3. Complete registration
+   4. Go to: Dashboard → Settings → API Keys
+   5. Click "Generate Test Keys"
+   6. You will see:
+      - Key ID (starts with rzp_test_)
+      - Key Secret (long string)
+   7. COPY BOTH VALUES
+
+
+┌────────────────────────────────────────────────────────────────────────┐
+│ STEP 2: Update Configuration File                                     │
+└────────────────────────────────────────────────────────────────────────┘
+
+   File Location:
+   📁 CropDeal.TransactionService\appsettings.json
+
+   Find this section:
+   ┌──────────────────────────────────────────────────────────────────┐
+   │ "Razorpay": {                                                    │
+   │   "KeyId": "YOUR_RAZORPAY_KEY_ID",          ← REPLACE THIS      │
+   │   "KeySecret": "YOUR_RAZORPAY_KEY_SECRET"   ← REPLACE THIS      │
+   │ }                                                                │
+   └──────────────────────────────────────────────────────────────────┘
+
+   Replace with your actual values:
+   ┌──────────────────────────────────────────────────────────────────┐
+   │ "Razorpay": {                                                    │
+   │   "KeyId": "rzp_test_AbCdEfGhIjKlMnOp",                         │
+   │   "KeySecret": "XyZ123456789AbCdEfGhIjKlMnOp"                   │
+   │ }                                                                │
+   └──────────────────────────────────────────────────────────────────┘
+
+
+┌────────────────────────────────────────────────────────────────────────┐
+│ STEP 3: Restore NuGet Packages                                        │
+└────────────────────────────────────────────────────────────────────────┘
+
+   Open terminal in project folder and run:
+   
+   cd CropDeal.TransactionService
+   dotnet restore
+
+
+┌────────────────────────────────────────────────────────────────────────┐
+│ STEP 4: Test the Integration                                          │
+└────────────────────────────────────────────────────────────────────────┘
+
+   1. Start all services:
+      > START_ALL_SERVICES.bat
+
+   2. Start Angular frontend:
+      > cd CropDealUI
+      > npm start
+
+   3. Test payment:
+      - Login as Dealer
+      - Create an order
+      - Go to Payment page
+      - Select "Razorpay (Recommended)"
+      - Click "Pay Now"
+      - Use test card: 4111 1111 1111 1111
+      - CVV: 123
+      - Expiry: 12/25
+      - OTP: 1234
+
+
+╔════════════════════════════════════════════════════════════════════════╗
+║                         IMPORTANT NOTES                                ║
+╚════════════════════════════════════════════════════════════════════════╝
+
+⚠️  DO NOT use live/production keys for testing
+✅  Always use TEST keys (they start with rzp_test_)
+✅  Test keys are FREE and unlimited
+✅  No real money is charged in test mode
+✅  You can switch to live keys later for production
+
+
+╔════════════════════════════════════════════════════════════════════════╗
+║                         NEED HELP?                                     ║
+╚════════════════════════════════════════════════════════════════════════╝
+
+📖 Read: RAZORPAY_INTEGRATION_GUIDE.md (detailed documentation)
+📖 Read: RAZORPAY_QUICKSTART.txt (quick reference)
+📖 Read: RAZORPAY_SUMMARY.md (what was changed)
+
+🌐 Razorpay Docs: https://razorpay.com/docs/
+💬 Razorpay Support: https://razorpay.com/support/
+
+
+═══════════════════════════════════════════════════════════════════════════
+
+Once you complete these steps, your Razorpay integration will be FULLY
+FUNCTIONAL and ready to accept payments! 🎉
+
+═══════════════════════════════════════════════════════════════════════════

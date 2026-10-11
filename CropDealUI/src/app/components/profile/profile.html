@@ -1,0 +1,88 @@
+<div class="profile-container">
+
+  <!-- Profile Header -->
+  <div class="profile-header-card">
+    <div class="avatar-wrapper">
+      <div class="avatar-initials" *ngIf="!profileImage">
+        {{ user.firstName?.charAt(0) }}{{ user.lastName?.charAt(0) }}
+      </div>
+      <img *ngIf="profileImage" [src]="profileImage" class="avatar-img" />
+      <label class="avatar-upload-btn">
+        <input type="file" (change)="onImageSelect($event)" accept="image/*" style="display:none" />
+        📷
+      </label>
+    </div>
+    <div class="profile-info">
+      <h2>{{ user.firstName }} {{ user.lastName }} <span class="verified">✔ Verified</span></h2>
+      <p>📍 {{ user.address || 'Location not set' }}</p>
+      <p>📞 {{ user.phoneNumber || 'Phone not set' }}</p>
+      <p>✉️ {{ user.email }}</p>
+      <button class="btn-edit-profile" (click)="editMode = !editMode">
+        {{ editMode ? 'Cancel' : 'Edit Profile' }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Notifications -->
+  <div class="alert alert-success" *ngIf="profileSuccessMessage">{{ profileSuccessMessage }}</div>
+  <div class="alert alert-error"   *ngIf="profileErrorMessage">{{ profileErrorMessage }}</div>
+  <div class="alert alert-success" *ngIf="bankSuccessMessage">{{ bankSuccessMessage }}</div>
+  <div class="alert alert-error"   *ngIf="bankErrorMessage">{{ bankErrorMessage }}</div>
+
+  <!-- Edit Profile Form -->
+  <div class="form-card" *ngIf="editMode">
+    <h3>Edit Personal Information</h3>
+    <form (ngSubmit)="updateProfile()">
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" [(ngModel)]="user.firstName" name="firstName" required />
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" [(ngModel)]="user.lastName" name="lastName" required />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Phone</label>
+        <input type="tel" [(ngModel)]="user.phoneNumber" name="phoneNumber" />
+      </div>
+      <div class="form-group">
+        <label>Location</label>
+        <input type="text" [(ngModel)]="user.address" name="address" />
+      </div>
+      <button type="submit" class="btn-save">Save Profile</button>
+    </form>
+  </div>
+
+  <!-- Bank Details -->
+  <div class="form-card">
+    <div class="card-header-row">
+      <h3>Bank Details</h3>
+      <button class="btn-edit-small" (click)="bankEditMode = !bankEditMode">
+        {{ bankEditMode ? 'Cancel' : 'Edit' }}
+      </button>
+    </div>
+    <div class="bank-info" *ngIf="!bankEditMode">
+      <p><strong>Bank Name:</strong> {{ bankAccount.bankName || 'Not set' }}</p>
+      <p><strong>Account No:</strong> {{ bankAccount.accountNumber ? '****' + bankAccount.accountNumber.slice(-4) : 'Not set' }}</p>
+      <p><strong>IFSC Code:</strong> {{ bankAccount.ifscCode || 'Not set' }}</p>
+    </div>
+    <form *ngIf="bankEditMode" (ngSubmit)="saveBankAccount()">
+      <div class="form-group">
+        <label>Bank Name</label>
+        <input type="text" [(ngModel)]="bankAccount.bankName" name="bankName" required />
+      </div>
+      <div class="form-group">
+        <label>Account Number</label>
+        <input type="text" [(ngModel)]="bankAccount.accountNumber" name="accountNumber" required />
+      </div>
+      <div class="form-group">
+        <label>IFSC Code</label>
+        <input type="text" [(ngModel)]="bankAccount.ifscCode" name="ifscCode" required />
+      </div>
+      <button type="submit" class="btn-save">Save Bank Details</button>
+    </form>
+  </div>
+
+</div>

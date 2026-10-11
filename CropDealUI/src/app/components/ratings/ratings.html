@@ -1,0 +1,75 @@
+<div class="ratings-container">
+
+  <div class="success-message" *ngIf="successMessage">{{ successMessage }}</div>
+  <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+  <h2 class="page-title" *ngIf="getUserType() === '2'">⭐ Rate Your Orders</h2>
+  <h2 class="page-title" *ngIf="getUserType() === '1'">⭐ My Ratings</h2>
+
+  <!-- Loading -->
+  <div class="loading" *ngIf="loading">
+    <p>Loading...</p>
+  </div>
+
+  <!-- Farmer View: Rating Summary -->
+  <div *ngIf="!loading && getUserType() === '1' && ratings.length > 0">
+    <div class="summary-card">
+      <h3>Rating Summary</h3>
+      <div class="summary-score">
+        <span class="score-value">{{ averageRating.toFixed(1) }}</span>
+        <div>
+          <p class="stars">⭐⭐⭐⭐⭐</p>
+          <p class="score-sub">Based on {{ ratings.length }} reviews</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="farmer-ratings-grid">
+      <div class="farmer-rating-card" *ngFor="let rating of ratings">
+        <h3>Order #{{ rating.orderId }}</h3>
+        <p><span class="label">⭐ Rating:</span> <span class="star-value">{{ rating.rating }} ⭐</span></p>
+        <p><span class="label">💬 Review:</span> {{ rating.review || 'No review provided' }}</p>
+        <p class="date">📅 {{ rating.createdAt | date:'medium' }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Farmer empty -->
+  <div class="empty-state" *ngIf="!loading && getUserType() === '1' && ratings.length === 0">
+    <div class="empty-icon">⭐</div>
+    <p>No ratings received yet.</p>
+  </div>
+
+  <!-- Dealer View: Rate completed orders -->
+  <div class="ratings-grid" *ngIf="!loading && getUserType() === '2' && completedOrders.length > 0">
+    <div class="rating-card" *ngFor="let order of completedOrders">
+      <h3>Order #{{ order.id }}</h3>
+      <p><span class="label">🌾 Crop:</span> {{ order.cropName }}</p>
+      <p><span class="label">👨‍🌾 Farmer:</span> {{ order.farmerName }}</p>
+      <div class="rating-form">
+        <div>
+          <label>Rating:</label>
+          <select [(ngModel)]="rating">
+            <option value="1">⭐ 1 Star</option>
+            <option value="2">⭐⭐ 2 Stars</option>
+            <option value="3">⭐⭐⭐ 3 Stars</option>
+            <option value="4">⭐⭐⭐⭐ 4 Stars</option>
+            <option value="5">⭐⭐⭐⭐⭐ 5 Stars</option>
+          </select>
+        </div>
+        <div>
+          <label>Review:</label>
+          <textarea [(ngModel)]="review" placeholder="Write your review..." rows="4"></textarea>
+        </div>
+        <button class="btn-submit-rating" (click)="submitRating(order.id)">Submit Rating ⭐</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dealer empty -->
+  <div class="empty-state" *ngIf="!loading && getUserType() === '2' && completedOrders.length === 0">
+    <div class="empty-icon">⭐</div>
+    <p>No completed orders to rate.</p>
+  </div>
+
+</div>

@@ -1,0 +1,108 @@
+<div class="manage-container">
+  <div class="notification success" *ngIf="successMessage">{{ successMessage }}</div>
+  <div class="notification error" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+  <div class="header">
+    <div>
+      <h2>Manage Dealers</h2>
+      <p>View and manage all registered dealers</p>
+    </div>
+    <button class="btn-export" (click)="exportReport()">📊 Export Report</button>
+  </div>
+
+  <div class="table-card">
+    <div *ngIf="loading" style="text-align: center; padding: 40px;">
+      <p>Loading dealers...</p>
+    </div>
+    <table *ngIf="!loading">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Location</th>
+          <th>Status</th>
+          <th>Toggle</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let dealer of dealers">
+          <td>{{ dealer.firstName }} {{ dealer.lastName }}</td>
+          <td>{{ dealer.email }}</td>
+          <td>{{ dealer.phoneNumber }}</td>
+          <td>{{ dealer.location || 'N/A' }}</td>
+          <td>
+            <span class="status" [class.active]="dealer.isActive" [class.inactive]="!dealer.isActive">
+              {{ dealer.isActive ? 'Active' : 'Inactive' }}
+            </span>
+          </td>
+          <td>
+            <label class="toggle-switch">
+              <input type="checkbox" [checked]="dealer.isActive" (change)="toggleStatus(dealer)" />
+              <span class="toggle-slider"></span>
+            </label>
+          </td>
+          <td>
+            <button class="btn-edit" (click)="editDealer(dealer)">Edit</button>
+            <button class="btn-ratings" (click)="viewRatings(dealer)">Ratings</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal" *ngIf="showEditModal" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <h3>Edit Dealer</h3>
+    <div class="form-group">
+      <label>First Name</label>
+      <input type="text" [(ngModel)]="editingDealer.firstName" />
+    </div>
+    <div class="form-group">
+      <label>Last Name</label>
+      <input type="text" [(ngModel)]="editingDealer.lastName" />
+    </div>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" [(ngModel)]="editingDealer.email" />
+    </div>
+    <div class="form-group">
+      <label>Phone</label>
+      <input type="text" [(ngModel)]="editingDealer.phoneNumber" />
+    </div>
+    <div class="form-group">
+      <label>Location</label>
+      <input type="text" [(ngModel)]="editingDealer.location" />
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" (click)="closeModal()">Cancel</button>
+      <button class="btn-save" (click)="saveEdit()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- Ratings Modal -->
+<div class="modal" *ngIf="showRatingsModal" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <h3>Ratings given by {{ viewingRatings?.firstName }} {{ viewingRatings?.lastName }}</h3>
+    <div *ngIf="ratings.length === 0" style="text-align: center; padding: 20px;">
+      <p>No ratings given yet</p>
+    </div>
+    <div class="ratings-list" *ngIf="ratings.length > 0">
+      <div class="rating-item" *ngFor="let rating of ratings">
+        <div class="rating-header">
+          <span class="rating-stars">⭐ {{ rating.rating }}/5</span>
+          <span class="rating-date">{{ rating.createdAt | date:'dd MMM yyyy' }}</span>
+        </div>
+        <p class="rating-review">Rated farmer: {{ rating.reviewee?.firstName }} {{ rating.reviewee?.lastName }}</p>
+        <p class="rating-review">{{ rating.review || 'No review provided' }}</p>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" (click)="closeModal()">Close</button>
+    </div>
+  </div>
+</div>

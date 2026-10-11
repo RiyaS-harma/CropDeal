@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+/* Global styles */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+
+/* Responsive tables - scroll horizontally on mobile */
+.table-card {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+table {
+  min-width: 600px;
+}
+
+/* Responsive cards grid */
+@media (max-width: 768px) {
+  .stats-container {
+    grid-template-columns: repeat(2, 1fr) !important;
+    padding: 15px !important;
+    margin-top: -20px !important;
+  }
+
+  .manage-container {
+    padding: 16px !important;
+  }
+
+  .listings-container {
+    padding: 16px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-container {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Chatbot responsive */
+@media (max-width: 480px) {
+  .chat-window {
+    width: calc(100vw - 20px) !important;
+    right: -10px !important;
+    bottom: 70px !important;
+  }
+}

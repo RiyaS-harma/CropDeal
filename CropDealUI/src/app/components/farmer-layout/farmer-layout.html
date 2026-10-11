@@ -1,0 +1,74 @@
+<div class="farmer-portal">
+
+  <!-- Mobile toggle -->
+  <button class="hamburger" (click)="toggleSidebar()">☰</button>
+
+  <!-- Overlay (mobile only) -->
+  <div class="overlay" [class.show]="sidebarOpen && isMobile" (click)="toggleSidebar()"></div>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" [class.open]="sidebarOpen">
+    <div class="logo-section">
+      <h2 class="logo">🌾 CropDeal</h2>
+      <p class="portal-label">Farmer Portal</p>
+    </div>
+
+    <nav class="nav-menu">
+      <a routerLink="/farmer/dashboard" routerLinkActive="active" (click)="sidebarOpen = false" class="nav-item">
+        <span class="icon">📊</span> Dashboard
+      </a>
+      <a routerLink="/farmer/crops" routerLinkActive="active" (click)="sidebarOpen = false" class="nav-item">
+        <span class="icon">🌾</span> My Crops
+      </a>
+      <a routerLink="/farmer/orders" routerLinkActive="active" (click)="sidebarOpen = false" class="nav-item">
+        <span class="icon">📦</span> Orders
+      </a>
+      <a routerLink="/farmer/receipts" routerLinkActive="active" (click)="sidebarOpen = false" class="nav-item">
+        <span class="icon">🧾</span> Receipts
+      </a>
+      <a routerLink="/farmer/ratings" routerLinkActive="active" (click)="sidebarOpen = false" class="nav-item">
+        <span class="icon">⭐</span> Ratings
+      </a>
+    </nav>
+
+    <div class="profile-section">
+      <a routerLink="/farmer/profile" class="profile-info" (click)="sidebarOpen = false">
+        <div class="profile-avatar" *ngIf="!profileImage">{{ getInitials() }}</div>
+        <img *ngIf="profileImage" [src]="profileImage" alt="profile" class="profile-avatar" />
+        <div class="profile-details">
+          <p class="profile-name">{{ fullName }}</p>
+          <p class="profile-role">View Profile</p>
+        </div>
+      </a>
+      <button class="logout-btn" (click)="logout()">Logout</button>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <div class="main-content">
+    <div class="top-bar">
+      <div class="search-wrapper">
+        <input type="text" [(ngModel)]="searchQuery" (keyup.enter)="onSearch()" placeholder="Search crops..." class="search-input" />
+      </div>
+      <button class="btn-new-listing" (click)="openNewListing()">+ New Listing</button>
+    </div>
+    <div class="content-area">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+
+</div>
+
+<app-chatbot></app-chatbot>
+
+<!-- New Listing Modal -->
+<div class="modal-backdrop" *ngIf="showNewListing" (click)="closeNewListing()"></div>
+<div class="modal-popup" *ngIf="showNewListing">
+  <div class="modal-popup-header">
+    <h3>Create New Listing</h3>
+    <button class="modal-close-btn" (click)="closeNewListing()">✕</button>
+  </div>
+  <div class="modal-popup-body">
+    <app-publish-crop (listingDone)="onListingDone()"></app-publish-crop>
+  </div>
+</div>

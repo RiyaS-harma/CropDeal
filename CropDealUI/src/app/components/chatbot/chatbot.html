@@ -1,0 +1,42 @@
+<div class="chatbot-wrapper">
+  <!-- Toggle Button -->
+  <button class="chat-toggle" (click)="toggleChat()">
+    <span *ngIf="!isOpen">💬</span>
+    <span *ngIf="isOpen">✕</span>
+  </button>
+
+  <!-- Chat Window -->
+  <div class="chat-window" *ngIf="isOpen">
+    <div class="chat-header">
+      <div class="header-info">
+        <div class="bot-avatar">🤖</div>
+        <div>
+          <p class="bot-name">Novo</p>
+          <p class="bot-status">Online</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="chat-messages" #scrollMe>
+      <div *ngFor="let msg of messages" [ngClass]="msg.isUser ? 'message user' : 'message bot'">
+        <div class="bubble">{{ msg.text }}</div>
+        <span class="time">{{ msg.time }}</span>
+      </div>
+      <div class="message bot" *ngIf="loading">
+        <div class="bubble typing">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="chat-input">
+      <textarea
+        [(ngModel)]="message"
+        (keydown)="onKeyDown($event)"
+        placeholder="Type a message..."
+        rows="1"
+      ></textarea>
+      <button (click)="sendMessage()" [disabled]="loading || !message.trim()">➤</button>
+    </div>
+  </div>
+</div>

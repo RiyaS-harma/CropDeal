@@ -1,0 +1,207 @@
+.listings-container {
+  padding: 40px;
+  background: #f4f6f5;
+  min-height: 100vh;
+  font-family: "Segoe UI", sans-serif;
+  position: relative;
+}
+
+.success-message {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #4caf50;
+  color: white;
+  padding: 15px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  z-index: 1000;
+  animation: slideIn 0.3s ease-out;
+}
+
+.error-message {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #f44336;
+  color: white;
+  padding: 15px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  z-index: 1000;
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(400px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.header h2 {
+  margin: 0;
+  color: #333;
+  font-size: 28px;
+}
+
+.btn-green {
+  background: #2e7d32;
+  color: white;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-green:hover {
+  background: #1b5e20;
+}
+
+.table-card {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+}
+
+th {
+  background: #f1f1f1;
+  font-weight: 600;
+}
+
+.status {
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.active {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.sold {
+  background: #fff3e0;
+  color: #ef6c00;
+}
+
+.inactive {
+  background: #ffebee;
+  color: #c62828;
+}
+
+.btn-edit {
+  background: #e3f2fd;
+  color: #1565c0;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 6px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.btn-edit:hover {
+  background: #bbdefb;
+}
+
+.btn-delete {
+  background: #ffebee;
+  color: #c62828;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-delete:hover {
+  background: #ffcdd2;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.modal-content {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  width: 400px;
+  max-width: 90%;
+  text-align: center;
+}
+
+.modal-content h3 {
+  margin: 0 0 15px 0;
+  color: #333;
+  font-size: 20px;
+}
+
+.modal-content p {
+  margin: 0 0 25px 0;
+  color: #666;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.btn-cancel {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  background: #f5f5f5;
+  color: #555;
+}
+
+.btn-cancel:hover {
+  background: #e0e0e0;
+}
+
+.modal-actions .btn-delete {
+  padding: 10px 20px;
+  background: #f44336;
+  color: white;
+  font-size: 14px;
+}
+
+.modal-actions .btn-delete:hover {
+  background: #d32f2f;
+}

@@ -1,0 +1,196 @@
+.subscriptions-container {
+  padding: 40px;
+  background: #f4f7f9;
+  min-height: 100vh;
+  text-align: center;
+}
+
+h2 {
+  color: #2e7d32;
+  margin-bottom: 10px;
+  font-size: 32px;
+}
+
+.subtitle {
+  color: #666;
+  margin-bottom: 40px;
+  font-size: 16px;
+}
+
+.add-subscription-card {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  max-width: 800px;
+  margin: 0 auto 40px;
+}
+
+.add-subscription-card h3 {
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 20px;
+}
+
+.form-row {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.form-row select,
+.form-row input {
+  flex: 1;
+  min-width: 200px;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.btn-subscribe {
+  background: #2e7d32;
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-subscribe:hover:not(:disabled) {
+  background: #1b5e20;
+}
+
+.btn-subscribe:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.subscriptions-grid {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.subscription-card {
+  width: 280px;
+  background: white;
+  border: 2px solid #e0e0e0;
+  padding: 30px 25px;
+  border-radius: 12px;
+  position: relative;
+  transition: 0.3s;
+  text-align: center;
+}
+
+.subscription-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  border-color: #2e7d32;
+}
+
+.card-header {
+  margin-bottom: 15px;
+}
+
+.crop-badge {
+  background: #2e7d32;
+  color: white;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.subscription-card h3 {
+  color: #333;
+  margin: 15px 0 10px 0;
+  font-size: 22px;
+}
+
+.location {
+  color: #666;
+  margin: 10px 0;
+  font-size: 14px;
+}
+
+.features {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+  text-align: left;
+}
+
+.features li {
+  margin: 10px 0;
+  color: #555;
+  font-size: 14px;
+}
+
+.btn-unsubscribe {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+  width: 100%;
+  margin-top: 15px;
+}
+
+.btn-unsubscribe:hover {
+  background: #c82333;
+}
+
+.success-message {
+  background: #d4edda;
+  color: #155724;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border: 1px solid #c3e6cb;
+}
+
+.error-message {
+  background: #f8d7da;
+  color: #721c24;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border: 1px solid #f5c6cb;
+}
+
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+  font-size: 16px;
+}
+
+.no-subscriptions {
+  background: white;
+  padding: 60px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.no-subscriptions h3 {
+  color: #333;
+  margin: 0 0 10px 0;
+}
+
+.no-subscriptions p {
+  color: #666;
+  margin: 0;
+}

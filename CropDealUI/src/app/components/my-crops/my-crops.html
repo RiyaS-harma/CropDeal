@@ -1,0 +1,60 @@
+<div class="listings-container">
+  <!-- Success/Error Messages -->
+  <div class="success-message" *ngIf="successMessage">{{ successMessage }}</div>
+  <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+  <div class="header">
+    <h2>My Crops</h2>
+  </div>
+
+  <div class="table-card">
+    <table>
+      <thead>
+        <tr>
+          <th>Crop</th>
+          <th>Stock (kg)</th>
+          <th>Price (₹/kg)</th>
+          <th>Location</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let item of crops">
+          <td>{{ item.cropName }}</td>
+          <td>{{ item.quantity }}</td>
+          <td>₹{{ item.pricePerUnit }}</td>
+          <td>{{ item.location }}</td>
+          <td>
+            <span
+              class="status"
+              [ngClass]="{
+                'active': item.quantity > 0,
+                'sold': item.quantity === 0
+              }"
+            >
+              {{ item.quantity > 0 ? 'Active' : 'Sold Out' }}
+            </span>
+          </td>
+          <td>
+            <button class="btn-edit" (click)="editCrop(item.id)">Edit</button>
+            <button class="btn-delete" (click)="deleteCrop(item.id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal" *ngIf="showDeleteModal" (click)="cancelDelete()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <h3>Confirm Delete</h3>
+    <p>Are you sure you want to delete this crop?</p>
+    <div class="modal-actions">
+      <button class="btn-cancel" (click)="cancelDelete()">Cancel</button>
+      <button class="btn-delete" (click)="confirmDelete()">Delete</button>
+    </div>
+  </div>
+</div>

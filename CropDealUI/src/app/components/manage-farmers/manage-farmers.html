@@ -1,0 +1,81 @@
+<div class="manage-container">
+  <div class="notification success" *ngIf="successMessage">{{ successMessage }}</div>
+  <div class="notification error" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+  <div class="header">
+    <h2>Manage Farmers</h2>
+    <p>View and manage all registered farmers</p>
+  </div>
+
+  <div class="table-card">
+    <div *ngIf="loading" style="text-align: center; padding: 40px;">
+      <p>Loading farmers...</p>
+    </div>
+    <table *ngIf="!loading">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Location</th>
+          <th>Status</th>
+          <th>Toggle</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let farmer of farmers">
+          <td>{{ farmer.firstName }} {{ farmer.lastName }}</td>
+          <td>{{ farmer.email }}</td>
+          <td>{{ farmer.phoneNumber }}</td>
+          <td>{{ farmer.location || 'N/A' }}</td>
+          <td>
+            <span class="status" [class.active]="farmer.isActive" [class.inactive]="!farmer.isActive">
+              {{ farmer.isActive ? 'Active' : 'Inactive' }}
+            </span>
+          </td>
+          <td>
+            <label class="toggle-switch">
+              <input type="checkbox" [checked]="farmer.isActive" (change)="toggleStatus(farmer)" />
+              <span class="toggle-slider"></span>
+            </label>
+          </td>
+          <td>
+            <button class="btn-edit" (click)="editFarmer(farmer)">Edit</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal" *ngIf="showEditModal" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <h3>Edit Farmer</h3>
+    <div class="form-group">
+      <label>First Name</label>
+      <input type="text" [(ngModel)]="editingFarmer.firstName" />
+    </div>
+    <div class="form-group">
+      <label>Last Name</label>
+      <input type="text" [(ngModel)]="editingFarmer.lastName" />
+    </div>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" [(ngModel)]="editingFarmer.email" />
+    </div>
+    <div class="form-group">
+      <label>Phone</label>
+      <input type="text" [(ngModel)]="editingFarmer.phoneNumber" />
+    </div>
+    <div class="form-group">
+      <label>Location</label>
+      <input type="text" [(ngModel)]="editingFarmer.location" />
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" (click)="closeModal()">Cancel</button>
+      <button class="btn-save" (click)="saveEdit()">Save</button>
+    </div>
+  </div>
+</div>

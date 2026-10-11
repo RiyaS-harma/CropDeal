@@ -1,0 +1,43 @@
+<div class="dealer-portal">
+  <!-- Top Navigation Bar -->
+  <nav class="top-navbar">
+    <div class="navbar-left">
+      <div class="logo-section">
+        <h1 class="logo">🌾 CropDeal</h1>
+        <p class="portal-label">Dealer Portal</p>
+      </div>
+      <a routerLink="/dealer/marketplace" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link">Marketplace</a>
+    </div>
+    <div class="navbar-right">
+      <a routerLink="/dealer/cart" class="icon-link" title="Cart">
+        🛒
+      </a>
+      <a routerLink="/dealer/subscriptions" class="icon-link" title="Subscriptions">🔔</a>
+      
+      <div class="profile-dropdown">
+        <button class="profile-btn" (click)="toggleDropdown()">
+          <div *ngIf="!profileImage" class="profile-avatar">
+            {{ getInitials() }}
+          </div>
+          <img *ngIf="profileImage" [src]="profileImage" alt="profile" class="profile-avatar" />
+          <span>{{ firstName }} ▾</span>
+        </button>
+        <div class="dropdown-menu" [class.show]="dropdownOpen">
+          <a routerLink="/dealer/dashboard" class="dropdown-item" (click)="closeDropdown()">📊 Dashboard</a>
+          <a routerLink="/dealer/orders" class="dropdown-item" (click)="closeDropdown()">📦 My Orders</a>
+          <a routerLink="/dealer/invoices" class="dropdown-item" (click)="closeDropdown()">📄 Invoices</a>
+          <a routerLink="/dealer/profile" class="dropdown-item" (click)="closeDropdown()">👤 Profile</a>
+          <div class="dropdown-divider"></div>
+          <button (click)="logout()" class="dropdown-item logout-btn">Logout</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>
+
+<app-chatbot></app-chatbot>

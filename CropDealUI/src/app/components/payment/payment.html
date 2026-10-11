@@ -1,0 +1,35 @@
+<div class="payment-container">
+  <div class="success-message" *ngIf="successMessage">{{ successMessage }}</div>
+  <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+  <h2>💳 Process Payment</h2>
+
+  <div class="loading" *ngIf="loading">Loading order...</div>
+
+  <div class="order-card" *ngIf="!loading && order">
+    <div class="order-info">
+      <h3>Order #{{ order.id }}</h3>
+      <p><strong>Crop:</strong> {{ order.cropName || order.crop?.cropName }}</p>
+      <p><strong>Quantity:</strong> {{ order.quantity }}</p>
+      <p><strong>Total Amount:</strong> ₹{{ order.totalAmount }}</p>
+      <p><strong>Status:</strong> {{ order.status }}</p>
+    </div>
+    <div class="payment-form">
+      <label>Payment Method:</label>
+      <select [(ngModel)]="paymentMethod">
+        <option value="Razorpay">Razorpay</option>
+        <option value="CreditCard">Credit Card</option>
+        <option value="DebitCard">Debit Card</option>
+        <option value="UPI">UPI</option>
+        <option value="NetBanking">Net Banking</option>
+      </select>
+      <button class="btn-pay" (click)="processPayment()">
+        Pay ₹{{ order.totalAmount }}
+      </button>
+    </div>
+  </div>
+
+  <div class="no-orders" *ngIf="!loading && !order">
+    <p>Order not found.</p>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+<div class="register-wrapper">
+  <div class="register-card">
+    <div class="logo">🌾 CropDeal</div>
+    <h2>Create Your Account</h2>
+    <p class="subtitle">Join our agricultural marketplace today</p>
+
+    <div class="notification error" *ngIf="errorMessage">{{ errorMessage }}</div>
+    <div class="notification success" *ngIf="successMessage">{{ successMessage }}</div>
+
+    <form (ngSubmit)="onSubmit()" class="form-grid">
+      <input type="text" placeholder="Full Name" [(ngModel)]="fullName" name="fullName" required />
+      <input type="email" placeholder="Email Address" [(ngModel)]="email" name="email" required />
+      <input type="text" placeholder="Phone Number" [(ngModel)]="phone" name="phone" />
+      <div>
+        <input type="password" placeholder="Password" [(ngModel)]="password" name="password" (input)="checkStrength()" required />
+        <span class="strength" [ngClass]="passwordStrength">{{ passwordStrength }}</span>
+      </div>
+      <input type="password" placeholder="Confirm Password" [(ngModel)]="confirmPassword" name="confirmPassword" required />
+      <select [(ngModel)]="userType" name="userType">
+        <option [value]="2">Dealer</option>
+        <option [value]="1">Farmer</option>
+      </select>
+      <button type="submit" class="primary-btn">Register</button>
+    </form>
+
+    <p class="login-link">Already have an account? <a routerLink="/login">Login</a></p>
+  </div>
+</div>

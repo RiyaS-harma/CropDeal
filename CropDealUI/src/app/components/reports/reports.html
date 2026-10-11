@@ -1,0 +1,80 @@
+<div class="reports-container">
+  <div class="header">
+    <div>
+      <h2>Reports Management</h2>
+      <p>Filter and generate reports based on orders</p>
+    </div>
+    <button class="btn-export" (click)="exportReport()">📊 Export to CSV</button>
+  </div>
+
+  <div class="filters-card">
+    <h3>Filters</h3>
+    <div class="filters-grid">
+      <div class="filter-group">
+        <label>Order Number</label>
+        <input type="text" [(ngModel)]="filters.orderNumber" placeholder="Enter order ID" />
+      </div>
+      <div class="filter-group">
+        <label>Status</label>
+        <select [(ngModel)]="filters.status">
+          <option value="">All</option>
+          <option value="Pending">Pending</option>
+          <option value="Confirmed">Confirmed</option>
+          <option value="Completed">Completed</option>
+          <option value="Cancelled">Cancelled</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Start Date</label>
+        <input type="date" [(ngModel)]="filters.startDate" />
+      </div>
+      <div class="filter-group">
+        <label>End Date</label>
+        <input type="date" [(ngModel)]="filters.endDate" />
+      </div>
+    </div>
+    <div class="filter-actions">
+      <button class="btn-apply" (click)="applyFilters()">Apply Filters</button>
+      <button class="btn-clear" (click)="clearFilters()">Clear</button>
+    </div>
+  </div>
+
+  <div class="table-card">
+    <div class="results-header">
+      <h3>Orders Report</h3>
+      <span class="results-count">{{ filteredOrders.length }} results</span>
+    </div>
+    <div *ngIf="loading" style="text-align: center; padding: 40px;">
+      <p>Loading orders...</p>
+    </div>
+    <table *ngIf="!loading && filteredOrders.length > 0">
+      <thead>
+        <tr>
+          <th>Crop</th>
+          <th>Quantity (kg)</th>
+          <th>Amount (₹)</th>
+          <th>Status</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of filteredOrders">
+          <td>{{ order.cropName }}</td>
+          <td>{{ order.quantity }}</td>
+          <td>₹{{ order.totalAmount }}</td>
+          <td>
+            <span class="status" [ngClass]="{
+              'pending': order.status === 'Pending',
+              'confirmed': order.status === 'Confirmed',
+              'completed': order.status === 'Completed',
+              'cancelled': order.status === 'Cancelled'
+            }">
+              {{ order.status }}
+            </span>
+          </td>
+          <td>{{ order.orderDate | date:'dd MMM yyyy' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

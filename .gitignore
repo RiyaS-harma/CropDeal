@@ -1,0 +1,10 @@
+**/bin/
+**/obj/
+**/node_modules/
+**/publish/
+api-logs/
+**/LogFiles/
+*.zip
+.env
+.env.*
+!.env.example

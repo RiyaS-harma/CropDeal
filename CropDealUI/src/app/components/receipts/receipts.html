@@ -1,0 +1,59 @@
+<div class="receipts-container">
+  <div class="header">
+    <h2>Receipts & Payments</h2>
+  </div>
+
+  <div class="summary">
+    <div class="card">
+      <h4>Total Earnings</h4>
+      <p>₹{{ totalEarnings }}</p>
+    </div>
+    <div class="card">
+      <h4>This Month</h4>
+      <p>₹{{ thisMonth }}</p>
+    </div>
+    <div class="card">
+      <h4>Pending Payments</h4>
+      <p>₹{{ pendingPayments }}</p>
+    </div>
+  </div>
+
+  <div class="table-card">
+    <div *ngIf="loading" style="text-align: center; padding: 40px;">
+      <p>Loading receipts...</p>
+    </div>
+    <table *ngIf="!loading">
+      <thead>
+        <tr>
+          <th>Receipt ID</th>
+          <th>Order ID</th>
+          <th>Buyer</th>
+          <th>Amount (₹)</th>
+          <th>Date</th>
+          <th>Status</th>
+          <th>Download</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let receipt of receipts">
+          <td>{{ receipt.id }}</td>
+          <td>{{ receipt.orderId }}</td>
+          <td>Dealer</td>
+          <td>₹{{ receipt.totalAmount }}</td>
+          <td>{{ receipt.createdAt | date:'dd MMM yyyy' }}</td>
+          <td>
+            <span class="status" [ngClass]="getStatusClass(receipt.status)">
+              {{ receipt.status }}
+            </span>
+          </td>
+          <td>
+            <button class="btn-download" (click)="downloadReceipt(receipt)">
+              Download
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

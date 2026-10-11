@@ -1,0 +1,96 @@
+╔══════════════════════════════════════════════════════════════════╗
+║           RAZORPAY INTEGRATION - QUICK START                     ║
+╚══════════════════════════════════════════════════════════════════╝
+
+📋 SETUP STEPS:
+
+1. GET RAZORPAY CREDENTIALS
+   → Visit: https://razorpay.com/
+   → Sign up for account
+   → Go to: Settings → API Keys → Generate Test Keys
+   → Copy: Key ID and Key Secret
+
+2. UPDATE BACKEND CONFIGURATION
+   → File: CropDeal.TransactionService\appsettings.json
+   → Replace:
+     "KeyId": "YOUR_RAZORPAY_KEY_ID"
+     "KeySecret": "YOUR_RAZORPAY_KEY_SECRET"
+
+3. RESTORE PACKAGES
+   → Open terminal in CropDeal.TransactionService folder
+   → Run: dotnet restore
+
+4. START SERVICES
+   → Run: START_ALL_SERVICES.bat
+   → Or start TransactionService individually
+
+5. TEST PAYMENT
+   → Login as Dealer
+   → Create an order
+   → Go to Payment page
+   → Select "Razorpay"
+   → Use test card: 4111 1111 1111 1111
+
+╔══════════════════════════════════════════════════════════════════╗
+║                    TEST CREDENTIALS                              ║
+╚══════════════════════════════════════════════════════════════════╝
+
+Card Number:  4111 1111 1111 1111
+CVV:          Any 3 digits (e.g., 123)
+Expiry:       Any future date (e.g., 12/25)
+OTP:          1234
+
+╔══════════════════════════════════════════════════════════════════╗
+║                    NEW API ENDPOINTS                             ║
+╚══════════════════════════════════════════════════════════════════╝
+
+1. Create Order:
+   POST http://localhost:5290/api/transaction/create-order
+   Body: { "orderId": 123 }
+
+2. Verify Payment:
+   POST http://localhost:5290/api/transaction/verify-payment
+   Body: {
+     "orderId": 123,
+     "razorpayOrderId": "order_xxx",
+     "razorpayPaymentId": "pay_xxx",
+     "razorpaySignature": "signature_xxx"
+   }
+
+╔══════════════════════════════════════════════════════════════════╗
+║                    PAYMENT FLOW                                  ║
+╚══════════════════════════════════════════════════════════════════╝
+
+1. Dealer clicks "Pay Now" with Razorpay selected
+2. Frontend calls /create-order endpoint
+3. Backend creates Razorpay order
+4. Razorpay checkout modal opens
+5. User completes payment
+6. Frontend receives payment response
+7. Frontend calls /verify-payment endpoint
+8. Backend verifies signature and processes payment
+9. Order status updated to "Completed"
+10. Invoice and receipt generated
+
+╔══════════════════════════════════════════════════════════════════╗
+║                    TROUBLESHOOTING                               ║
+╚══════════════════════════════════════════════════════════════════╝
+
+❌ "Invalid API Key"
+   → Check Razorpay credentials in appsettings.json
+   → Ensure no extra spaces in Key ID/Secret
+
+❌ "Payment signature verification failed"
+   → Check Key Secret is correct
+   → Ensure signature is passed correctly from frontend
+
+❌ "Razorpay is not defined"
+   → Verify Razorpay script is loaded in index.html
+   → Check browser console for script loading errors
+
+❌ Order not completing
+   → Check TransactionService is running on port 5290
+   → Verify JWT token is valid
+   → Check OrderService is accessible
+
+For detailed documentation, see: RAZORPAY_INTEGRATION_GUIDE.md
